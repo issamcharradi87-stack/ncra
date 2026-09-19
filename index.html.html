@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCRA Carrosserie</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#05080e;color:#e2e8f0;min-height:100vh}
+:root{--a:#00e5ff;--g:#0288d1;--bg:#05080e;--c:#0a1019;--c2:#0f1723;--b:#172033;--t:#e2e8f0;--t2:#94a3b8;--ok:#00e676;--w:#ffd740;--er:#ff5252;--in:#448aff;--gd:#c8a951}
+a{color:var(--a)}
+.hdr{padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:1px solid rgba(200,169,81,.08);position:relative}
+.hdr::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gd),var(--a),var(--gd),transparent)}
+.hdr-l{display:flex;align-items:center;gap:14px}
+.logo{width:42px;height:42px;border-radius:9px;background:linear-gradient(135deg,var(--a),var(--g),#01579b);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;color:#05080e}
+.ttl h1{font-size:20px;font-weight:800;letter-spacing:2px;background:linear-gradient(135deg,#fff,var(--a));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ttl .s1{font-size:11px;color:var(--gd);text-transform:uppercase;letter-spacing:3px;font-weight:600;margin-top:1px}
+.ttl .s2{font-size:10px;color:var(--t2);margin-top:1px}
+.ttl .s2 b{color:var(--a)}
+.hdr-r{display:flex;align-items:center;gap:10px}
+.clk{text-align:right;padding:5px 12px;border:1px solid rgba(0,229,255,.05);border-radius:7px}
+.clk-t{font-family:'Courier New',monospace;font-size:22px;font-weight:700;color:var(--a);letter-spacing:2px}
+.clk-d{font-size:9px;color:var(--t2)}
+.tgl{display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 14px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;transition:all .25s;border:1px solid}
+.tgl.off{background:rgba(255,82,82,.04);border-color:rgba(255,82,82,.12);color:var(--er)}
+.tgl.on{background:rgba(0,230,118,.04);border-color:rgba(0,230,118,.12);color:var(--ok)}
+.tgl .dot{width:7px;height:7px;border-radius:50%;animation:pls 2s infinite}
+.tgl.off .dot{background:var(--er)}.tgl.on .dot{background:var(--ok)}
+@keyframes pls{0%,100%{opacity:1}50%{opacity:.2}}
+.mj{padding:5px 24px;font-size:10px;color:var(--t2);border-bottom:1px solid rgba(255,255,255,.02);display:flex;align-items:center;gap:6px}
+.mj .d{width:5px;height:5px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.sr{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:16px 24px}
+.sc{background:linear-gradient(160deg,var(--c),var(--c2));border:1px solid var(--b);border-radius:12px;padding:14px 10px;text-align:center;position:relative;overflow:hidden;transition:all .2s}
+.sc:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc:nth-child(1)::before{background:var(--in)}.sc:nth-child(2)::before{background:var(--w)}.sc:nth-child(3)::before{background:var(--er)}.sc:nth-child(4)::before{background:var(--ok)}.sc:nth-child(5)::before{background:var(--a)}
+.sv{font-family:'Courier New',monospace;font-size:32px;font-weight:700}
+.sc:nth-child(1) .sv{color:var(--in)}.sc:nth-child(2) .sv{color:var(--w)}.sc:nth-child(3) .sv{color:var(--er)}.sc:nth-child(4) .sv{color:var(--ok)}.sc:nth-child(5) .sv{color:var(--a)}
+.sl{font-size:9px;color:var(--t2);text-transform:uppercase;letter-spacing:.1em;margin-top:5px;font-weight:700}
+.pb{padding:0 24px 14px}
+.pbx{background:linear-gradient(160deg,var(--c),var(--c2));border:1px solid var(--b);border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:16px}
+.prg{position:relative;width:54px;height:54px;flex-shrink:0}
+.prg svg{transform:rotate(-90deg);width:54px;height:54px}
+.prg circle{fill:none;stroke-width:4}
+.prg .bg{stroke:rgba(0,229,255,.05)}.prg .fg{stroke:var(--a);stroke-linecap:round;transition:stroke-dashoffset .8s}
+.prg .pv{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Courier New',monospace;font-size:13px;font-weight:700;color:var(--a)}
+.pi h3{font-size:13px;font-weight:700}.pi p{font-size:10px;color:var(--t2)}
+.tb{padding:0 24px 10px;display:flex;gap:6px;flex-wrap:wrap}
+.tb button{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid var(--b);background:var(--c);color:var(--t2);transition:all .2s;text-transform:uppercase;letter-spacing:.04em;font-family:inherit}
+.tb button:hover{border-color:var(--a);color:var(--a)}
+.ft{display:flex;gap:4px;padding:0 24px 10px;flex-wrap:wrap}
+.ft button{padding:5px 12px;border-radius:7px;font-size:10px;font-weight:700;cursor:pointer;color:var(--t2);background:var(--c);border:1px solid var(--b);font-family:inherit;text-transform:uppercase;letter-spacing:.05em;transition:all .2s}
+.ft button:hover{border-color:var(--a);color:var(--a)}
+.ft button.on{background:linear-gradient(135deg,var(--a),var(--g));color:#05080e;border-color:transparent}
+.ts{padding:0 24px 16px}
+.th{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.th h2{font-size:16px;font-weight:700}
+.tc{font-size:10px;color:var(--t2);background:rgba(0,229,255,.03);padding:3px 10px;border-radius:9px;border:1px solid rgba(0,229,255,.08)}
+.tw{background:linear-gradient(160deg,var(--c),var(--c2));border:1px solid var(--b);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:1200px}
+thead th{text-align:left;padding:10px 12px;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);font-weight:700;background:rgba(0,229,255,.015);border-bottom:1px solid var(--b);white-space:nowrap}
+tbody td{padding:9px 12px;color:var(--t);border-bottom:1px solid rgba(23,32,51,.7)}
+tbody tr:hover td{background:rgba(0,229,255,.015)}
+.em{text-align:center;padding:34px;color:var(--t2);font-style:italic;font-size:12px}
+.bdg{display:inline-block;padding:3px 10px;border-radius:9px;font-size:9px;font-weight:700;text-transform:uppercase}
+.b1{background:rgba(68,138,255,.08);color:var(--in);border:1px solid rgba(68,138,255,.15)}
+.b2{background:rgba(255,215,64,.08);color:var(--w);border:1px solid rgba(255,215,64,.15)}
+.b3{background:rgba(255,82,82,.08);color:var(--er);border:1px solid rgba(255,82,82,.15)}
+.b4{background:rgba(0,230,118,.08);color:var(--ok);border:1px solid rgba(0,230,118,.15)}
+.b5{background:rgba(100,116,139,.08);color:var(--t2);border:1px solid rgba(100,116,139,.15)}
+.del{background:none;border:none;color:rgba(255,82,82,.35);cursor:pointer;font-size:14px;padding:2px 6px;border-radius:4px}
+.del:hover{color:#ff5252;background:rgba(255,82,82,.08)}
+.ec{cursor:pointer;border-radius:3px;padding:2px 4px;transition:background .15s}
+.ec:hover{background:rgba(0,229,255,.06)}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(0,229,255,.1);border-top-color:var(--a);border-radius:50%;animation:sp .8s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.mo{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);z-index:100;justify-content:center;align-items:center;padding:16px}
+.mo.op{display:flex}
+.mx{background:linear-gradient(160deg,#0c1220,#0f1723);border:1px solid var(--b);border-radius:16px;padding:24px;max-width:500px;width:100%;position:relative;max-height:90vh;overflow-y:auto;box-shadow:0 16px 50px rgba(0,0,0,.5)}
+.mx h2{font-size:18px;font-weight:800;margin-bottom:3px}
+.mx .su{font-size:11px;color:var(--t2);margin-bottom:16px}
+.mcl{position:absolute;top:14px;right:14px;cursor:pointer;color:var(--t2);font-size:16px;background:none;border:none;padding:3px 7px;border-radius:5px}
+.mcl:hover{color:var(--a)}
+.fa{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.fa button{padding:8px 16px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;text-transform:uppercase;font-family:inherit;letter-spacing:.04em}
+.fc{background:transparent;border:1px solid var(--b);color:var(--t2)}
+.fsg{background:linear-gradient(135deg,var(--a),var(--g));color:#05080e;border:none}
+.cst{list-style:none;counter-reset:stp}
+.cst li{counter-increment:stp;padding:8px 0 8px 38px;position:relative;font-size:12px;color:var(--t2);line-height:1.6;border-left:1px solid rgba(23,32,51,.6);margin-left:12px}
+.cst li::before{content:counter(stp);position:absolute;left:-12px;top:6px;width:22px;height:22px;background:var(--c);border:1px solid var(--a);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--a)}
+.cst li strong{color:var(--a)}.cst li:last-child{border-left:none}
+.ci2{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.ci2 input{flex:1;min-width:180px;padding:10px 12px;border-radius:7px;border:1px solid var(--b);background:var(--bg);color:var(--a);font-family:'Courier New',monospace;font-size:11px;outline:none}
+.ci2 input:focus{border-color:var(--a)}
+.ci2 button{padding:10px 18px;border-radius:7px;background:linear-gradient(135deg,var(--a),var(--g));color:#05080e;border:none;font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;text-transform:uppercase}
+.iz{border:2px dashed rgba(0,230,118,.12);border-radius:12px;padding:24px 14px;text-align:center;margin:12px 0;cursor:pointer;transition:all .2s}
+.iz:hover{border-color:var(--ok);background:rgba(0,230,118,.02)}
+.iz p{font-size:12px;color:var(--t2);margin-top:3px}.iz .ok{color:var(--ok);font-weight:700}
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px}
+.ig span{display:flex;align-items:center;gap:4px;padding:4px 7px;border-radius:5px;background:rgba(0,229,255,.02);border:1px solid rgba(0,229,255,.04);font-size:10px;color:var(--t2)}
+.ig em{font-family:'Courier New',monospace;font-size:9px;color:var(--a);background:rgba(0,229,255,.06);padding:1px 4px;border-radius:3px;font-style:normal;font-weight:700}
+#cf{display:none}
+.qw{padding:14px;background:#fff;border-radius:12px;display:inline-block;margin:12px 0}
+.qw img{width:170px;height:170px;display:block}
+.qi{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.qi input{flex:1;min-width:140px;padding:9px 11px;border-radius:7px;border:1px solid var(--b);background:var(--bg);color:var(--a);font-family:'Courier New',monospace;font-size:11px;outline:none}
+.qi button{padding:9px 14px;border-radius:7px;background:linear-gradient(135deg,var(--a),var(--g));color:#05080e;border:none;font-weight:800;font-size:10px;cursor:pointer;font-family:inherit;text-transform:uppercase}
+.lb{background:var(--bg);border:1px solid var(--b);border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:8px;margin:10px 0}
+.lb input{flex:1;background:none;border:none;outline:none;color:var(--a);font-family:'Courier New',monospace;font-size:11px}
+.cb{font-size:9px;color:#05080e;padding:5px 10px;background:linear-gradient(135deg,var(--a),var(--g));border-radius:5px;border:none;cursor:pointer;font-weight:800;font-family:inherit}
+.sbt{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.sb{padding:9px 14px;border-radius:7px;font-size:10px;font-weight:700;text-transform:uppercase;border:none;cursor:pointer;font-family:inherit}
+.sw{background:#25d366;color:#fff}.se{background:var(--in);color:#fff}.ss{background:var(--w);color:#05080e}
+.nt{position:fixed;top:16px;right:16px;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:700;z-index:200;opacity:0;transform:translateY(-8px);transition:all .3s;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.nt.sh{opacity:1;transform:translateY(0)}
+.ftr{text-align:center;padding:18px 24px;border-top:1px solid rgba(255,255,255,.02);margin-top:10px}
+.ftr p{font-size:9px;color:var(--t2);letter-spacing:.5px}
+.ftr .br{color:var(--gd);font-weight:800}
+/* Cellules du tableau : meme marge partout */
+tbody td.ec{padding:9px 12px}
+tbody td.cc{text-align:center}
+tbody td.dcell{padding:6px 6px 6px 5px}
+.bdg{white-space:nowrap}
+/* Dates modifiables JJ/MM/AA */
+.dt{display:inline-flex;align-items:center;gap:5px;padding:3px 6px;border:1px solid transparent;border-radius:6px;transition:border-color .15s,background .15s}
+.dt:hover{background:rgba(0,229,255,.05)}
+.dt:focus-within{border-color:var(--a);background:rgba(0,229,255,.06)}
+.dt.bad{border-color:var(--er)}
+.dti{width:66px;background:none;border:none;outline:none;padding:0;color:var(--dc,#00e5ff);font-family:'Courier New',monospace;font-size:12px;font-weight:700}
+.dti::placeholder{color:var(--t2);opacity:.4;font-weight:400}
+.dpb{position:relative;display:inline-flex;width:15px;height:15px;flex-shrink:0;cursor:pointer;color:var(--t2)}
+.dpb .ci{width:15px;height:15px;opacity:.55;transition:opacity .15s,color .15s}
+.dpb:hover .ci{opacity:1;color:var(--a)}
+.dpk{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0;margin:0;color-scheme:dark}
+tr.nw td{animation:nwf 2.4s ease-out}
+@keyframes nwf{from{background:rgba(0,230,118,.25)}to{background:transparent}}
+/* Formulaire Ajouter */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fld.full{grid-column:1/-1}
+.fld label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);font-weight:700}
+.fi{width:100%;padding:9px 10px;border-radius:7px;border:1px solid var(--b);background:var(--bg);color:var(--t);font-family:inherit;font-size:12px;outline:none;color-scheme:dark}
+.fi:focus{border-color:var(--a)}
+textarea.fi{resize:vertical;min-height:52px}
+.fld .dt{display:flex;padding:9px 10px;border:1px solid var(--b);background:var(--bg);border-radius:7px}
+.fld .dt:focus-within{border-color:var(--a)}
+.fld .dt.bad{border-color:var(--er)}
+.fld .dti{flex:1;width:auto;min-width:0}
+.fa{flex-wrap:wrap}
+.fn{font-size:10px;color:var(--t2);margin-top:12px;line-height:1.5}
+/* Partager : onglets */
+.stb{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:4px 0 14px}
+.stb button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:9px;border:1px solid var(--b);background:var(--c);color:var(--t2);font-family:inherit;font-size:10px;font-weight:700;letter-spacing:.03em;cursor:pointer;transition:all .2s}
+.stb button span{font-size:20px;line-height:1}
+.stb button:hover{border-color:var(--a);color:var(--a)}
+.stb button.on{background:rgba(0,229,255,.08);border-color:var(--a);color:var(--a)}
+.sp{display:none}
+.sp.on{display:block}
+.sp .msg{background:var(--bg);border:1px solid var(--b);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--t2);white-space:pre-wrap;word-break:break-word;margin-bottom:12px;line-height:1.5}
+.sp .sb{width:100%;padding:11px 14px;font-size:11px}
+.sp .hint{font-size:10px;color:var(--t2);margin-top:8px}
+@media(max-width:520px){.fg{grid-template-columns:1fr}}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  .tb,.ft,.mo,.nt,.tgl,.ftr,.mj,.pb,.hdr-r,.del,.dpb{display:none!important}
+  body{background:#fff!important;color:#000!important}
+  .hdr{background:#fff!important;border:none!important;padding:8px 0 16px!important;margin-bottom:16px!important;border-bottom:2px solid #000!important}
+  .hdr::before{display:none!important}
+  .logo{display:none!important}
+  .ttl h1{font-size:18px!important;color:#000!important;-webkit-text-fill-color:#000!important;background:none!important}
+  .ttl .s1{color:#333!important;font-size:10px!important}
+  .ttl .s2{color:#555!important;font-size:9px!important}
+  .ttl .s2 b{color:#000!important}
+  .sr{padding:18px 0 10px!important;gap:5px!important;margin-top:10px!important}
+  .sc{background:#f3f3f3!important;border:1px solid #aaa!important;padding:6px!important;border-radius:4px!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .sv{font-size:18px!important}
+  .sc:nth-child(1) .sv{color:#0055aa!important}.sc:nth-child(2) .sv{color:#aa7700!important}.sc:nth-child(3) .sv{color:#cc0000!important}.sc:nth-child(4) .sv{color:#007700!important}.sc:nth-child(5) .sv{color:#005588!important}
+  .sl{color:#444!important;font-size:8px!important}
+  .ts{padding:16px 0 0!important;margin-top:10px!important}
+  .th h2{color:#000!important;font-size:13px!important}
+  .tc{background:#eee!important;border-color:#aaa!important;color:#333!important}
+  .tw{border:1px solid #999!important;background:#fff!important;border-radius:3px!important}
+  table{font-size:9px!important;min-width:auto!important}
+  thead th{background:#ddd!important;color:#111!important;border-color:#999!important;padding:4px 6px!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  thead th:last-child{display:none!important}
+  tbody td{color:#000!important;border-color:#ccc!important;padding:4px 6px!important}
+  tbody td:last-child{display:none!important}
+  .bdg{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .dt{border:none!important;padding:0!important;background:none!important;gap:0!important}
+  .dti{color:#000!important;font-size:9px!important;font-weight:400!important;width:56px!important}
+  .dti::placeholder{color:transparent!important}
+  .b1{background:#d4e5ff!important;color:#003d8f!important}.b2{background:#fff3c4!important;color:#8a6600!important}.b3{background:#ffd4d4!important;color:#b00000!important}.b4{background:#d0ffd0!important;color:#005500!important}.b5{background:#e8e8e8!important;color:#444!important}
+}
+@media(max-width:700px){.sr{grid-template-columns:repeat(2,1fr)}.hdr,.sr,.ts,.tb,.ft,.pb{padding-left:14px;padding-right:14px}.clk-t{font-size:18px}.ttl h1{font-size:16px}.ig{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="nt" id="nt"></div>
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="logo">MA</div>
+    <div class="ttl">
+      <h1>NCRA CARROSSERIE</h1>
+      <div class="s1">Suivi V&#233;hicules &#8212; Maniss Auto</div>
+      <div class="s2">Responsable : <b>Issam CHARRADI</b></div>
+    </div>
+  </div>
+  <div class="hdr-r">
+    <div class="tgl off" id="tg" onclick="toggleConn()"><span class="dot"></span><span id="tgt">D&#233;connect&#233;</span></div>
+    <div class="clk"><div class="clk-t" id="ck">--:--:--</div><div class="clk-d" id="cd">--</div></div>
+  </div>
+</header>
+<div class="mj"><span class="d"></span><span id="mt">En attente de connexion...</span></div>
+<div class="sr">
+  <div class="sc"><div class="sv" id="s1">0</div><div class="sl">En cours</div></div>
+  <div class="sc"><div class="sv" id="s2">0</div><div class="sl">&#192; surveiller</div></div>
+  <div class="sc"><div class="sv" id="s3">0</div><div class="sl">En retard</div></div>
+  <div class="sc"><div class="sv" id="s4">0</div><div class="sl">&#192; temps</div></div>
+  <div class="sc"><div class="sv" id="s5">0</div><div class="sl">Total</div></div>
+</div>
+<div class="pb"><div class="pbx">
+  <div class="prg"><svg viewBox="0 0 54 54"><circle class="bg" cx="27" cy="27" r="23"/><circle class="fg" id="pc" cx="27" cy="27" r="23" stroke-dasharray="144.5" stroke-dashoffset="144.5"/></svg><span class="pv" id="ppv">0%</span></div>
+  <div class="pi"><h3>Taux Respect D&#233;lais</h3><p>Objectif : &#8805; 95%</p></div>
+</div></div>
+<div class="tb">
+  <button onclick="fetchData()">&#128260; Rafra&#238;chir</button>
+  <button onclick="openGS()">&#128221; Sheets</button>
+  <button onclick="oAdd()">&#10133; Ajouter</button>
+  <button onclick="oM('mi')">&#128229; Importer</button>
+  <button onclick="oM('mc')">&#9881; Config</button>
+  <button onclick="xC()">&#128196; Exporter</button>
+  <button onclick="oShare()">&#128228; Partager</button>
+  <button onclick="window.print()">&#128424; PDF</button>
+</div>
+<div class="ft">
+  <button class="on" data-f="tous">Tous</button>
+  <button data-f="cours">En cours</button>
+  <button data-f="surveill">&#192; surveiller</button>
+  <button data-f="retard">En retard</button>
+  <button data-f="temps">&#192; temps</button>
+  <button data-f="termin">Termin&#233;</button>
+</div>
+<div class="ts">
+  <div class="th"><h2>&#128203; Suivi des V&#233;hicules</h2><span class="tc" id="tC">0</span></div>
+  <div class="tw"><table><thead><tr><th>N&#176;OR</th><th>Immatriculation</th><th>Mod&#232;le</th><th>Client</th><th>Intervention</th><th>Entr&#233;e</th><th>Restitution</th><th>Rendu</th><th>Statut</th><th>Retard</th><th>CS</th><th>Remarque</th><th>&#10005;</th></tr></thead><tbody id="tB"><tr><td colspan="13" class="em">&#9203; Chargement automatique...</td></tr></tbody></table></div>
+</div>
+<div class="mo" id="ma"><div class="mx" style="max-width:580px">
+  <button class="mcl" onclick="cM('ma')">&#10005;</button>
+  <h2>&#10133; Ajouter un v&#233;hicule</h2>
+  <p class="su">Renseignez les champs puis validez. Dates au format JJ/MM/AA.</p>
+  <div class="fg">
+    <div class="fld"><label for="a_o">N&#176;OR *</label><input class="fi" id="a_o" type="text" autocomplete="off"></div>
+    <div class="fld"><label for="a_i">Immatriculation</label><input class="fi" id="a_i" type="text" autocomplete="off"></div>
+    <div class="fld"><label for="a_m">Mod&#232;le</label><input class="fi" id="a_m" type="text" autocomplete="off"></div>
+    <div class="fld"><label for="a_c">Client</label><input class="fi" id="a_c" type="text" autocomplete="off"></div>
+    <div class="fld full"><label for="a_iv">Intervention</label><input class="fi" id="a_iv" type="text" autocomplete="off"></div>
+    <div class="fld"><label for="a_e">Entr&#233;e</label><div class="dt"><input class="dti" id="a_e" type="text" inputmode="numeric" maxlength="10" placeholder="JJ/MM/AA" autocomplete="off" oninput="dMask(this,event)" onblur="dNorm(this)"><label class="dpb" title="Calendrier"><svg class="ci" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width=".8"/><line x1="1" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width=".6"/><line x1="3.5" y1="1" x2="3.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><line x1="9.5" y1="1" x2="9.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><circle cx="4.5" cy="8" r=".6" fill="currentColor"/><circle cx="6.5" cy="8" r=".6" fill="currentColor"/><circle cx="8.5" cy="8" r=".6" fill="currentColor"/></svg><input class="dpk" type="date" tabindex="-1"></label></div></div>
+    <div class="fld"><label for="a_r">Restitution</label><div class="dt"><input class="dti" id="a_r" type="text" inputmode="numeric" maxlength="10" placeholder="JJ/MM/AA" autocomplete="off" oninput="dMask(this,event)" onblur="dNorm(this)"><label class="dpb" title="Calendrier"><svg class="ci" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width=".8"/><line x1="1" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width=".6"/><line x1="3.5" y1="1" x2="3.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><line x1="9.5" y1="1" x2="9.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><circle cx="4.5" cy="8" r=".6" fill="currentColor"/><circle cx="6.5" cy="8" r=".6" fill="currentColor"/><circle cx="8.5" cy="8" r=".6" fill="currentColor"/></svg><input class="dpk" type="date" tabindex="-1"></label></div></div>
+    <div class="fld"><label for="a_rd">Rendu</label><div class="dt"><input class="dti" id="a_rd" type="text" inputmode="numeric" maxlength="10" placeholder="JJ/MM/AA" autocomplete="off" oninput="dMask(this,event)" onblur="dNorm(this)"><label class="dpb" title="Calendrier"><svg class="ci" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width=".8"/><line x1="1" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width=".6"/><line x1="3.5" y1="1" x2="3.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><line x1="9.5" y1="1" x2="9.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><circle cx="4.5" cy="8" r=".6" fill="currentColor"/><circle cx="6.5" cy="8" r=".6" fill="currentColor"/><circle cx="8.5" cy="8" r=".6" fill="currentColor"/></svg><input class="dpk" type="date" tabindex="-1"></label></div></div>
+    <div class="fld"><label for="a_s">Statut</label><select class="fi" id="a_s"><option value="En cours">En cours</option><option value="&#192; surveiller">&#192; surveiller</option><option value="En retard">En retard</option><option value="&#192; temps">&#192; temps</option><option value="Termin&#233;">Termin&#233;</option></select></div>
+    <div class="fld"><label for="a_rt">Retard</label><input class="fi" id="a_rt" type="text" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+    <div class="fld"><label for="a_cs">CS</label><input class="fi" id="a_cs" type="text" autocomplete="off"></div>
+    <div class="fld full"><label for="a_rq">Remarque</label><textarea class="fi" id="a_rq" rows="2"></textarea></div>
+  </div>
+  <div class="fa"><button class="fc" onclick="cM('ma')">Annuler</button><button class="fsg" onclick="doAdd()">Ajouter</button></div>
+  <p class="fn">Le v&#233;hicule est enregistr&#233; sur cet appareil. Il n'est pas &#233;crit dans Google Sheets.</p>
+</div></div>
+<div class="mo" id="ms"><div class="mx">
+  <button class="mcl" onclick="cM('ms')">&#10005;</button>
+  <h2>&#128228; Partager</h2>
+  <p class="su">Envoyez le suivi &#224; vos collaborateurs</p>
+  <div class="stb">
+    <button class="on" data-t="qr" onclick="selSh('qr')"><span>&#128241;</span>Via QR</button>
+    <button data-t="wa" onclick="selSh('wa')"><span>&#128172;</span>WhatsApp</button>
+    <button data-t="sm" onclick="selSh('sm')"><span>&#9993;&#65039;</span>SMS</button>
+    <button data-t="lk" onclick="selSh('lk')"><span>&#128279;</span>Lien</button>
+  </div>
+  <div class="sp on" id="sp-qr" style="text-align:center">
+    <p class="su" style="margin-bottom:0">Vos collaborateurs scannent ce code pour ouvrir le suivi</p>
+    <div class="qw"><img id="qi2" alt="QR" style="min-height:170px;background:#f5f5f5"></div>
+    <p style="font-size:10px;color:#94a3b8;word-break:break-all" id="qrd"></p>
+  </div>
+  <div class="sp" id="sp-wa">
+    <div class="msg" id="wam"></div>
+    <button class="sb sw" onclick="swa()">Envoyer par WhatsApp</button>
+    <p class="hint">WhatsApp s'ouvre avec le message pr&#234;t : choisissez le contact.</p>
+  </div>
+  <div class="sp" id="sp-sm">
+    <div class="msg" id="smm"></div>
+    <button class="sb ss" onclick="ssm()">Envoyer par SMS</button>
+    <p class="hint">L'application Messages s'ouvre avec le texte pr&#234;t : choisissez le contact.</p>
+  </div>
+  <div class="sp" id="sp-lk">
+    <p class="su" style="margin-bottom:0">Copiez le lien et collez-le o&#249; vous voulez</p>
+    <div class="lb"><input type="text" id="slnk" aria-label="Lien &#224; partager"><button class="cb" onclick="cpl()">Copier</button></div>
+    <p class="hint">Vous pouvez modifier le lien : le QR code, WhatsApp et SMS l'utiliseront aussi.</p>
+  </div>
+  <div class="fa" style="margin-top:16px"><button class="fc" onclick="cM('ms')">Fermer</button></div>
+</div></div>
+<div class="mo" id="mc"><div class="mx">
+  <button class="mcl" onclick="cM('mc')">&#10005;</button>
+  <h2>&#9881; Configuration</h2>
+  <p class="su">Connectez votre Google Sheets</p>
+  <ul class="cst">
+    <li>Ouvrez <strong><a href="https://sheets.google.com" target="_blank">Google Sheets</a></strong></li>
+    <li>Ligne 1 : <strong>N&#176;OR | Immatriculation | Mod&#232;le | Client | Intervention | Entr&#233;e | Restitution | Rendu | Statut | Retard | CS | Remarque</strong></li>
+    <li><strong>Fichier &#8594; Partager &#8594; Publier sur le Web &#8594; Publier</strong></li>
+    <li>Copiez l'<strong>ID du document</strong> depuis l'URL (entre /d/ et /edit)</li>
+  </ul>
+  <p class="su" style="margin:8px 0 0">Les colonnes sont reconnues par leur titre. Les dates s'affichent en JJ/MM/AA.</p>
+  <div class="ci2"><input type="text" id="surl" placeholder="ID du Google Sheet ou lien complet..."><button onclick="doConn()">&#128279; Connecter</button></div>
+  <div id="cSt" style="margin-top:10px;font-size:11px;display:none;padding:8px 10px;border-radius:6px"></div>
+  <div class="fa"><button class="fc" onclick="cM('mc')">Fermer</button><button class="fc" onclick="rstLC()">Effacer modifs locales</button><button class="fc" onclick="doDisc()" style="color:#ff5252;border-color:rgba(255,82,82,.15)">D&#233;connecter</button></div>
+</div></div>
+<div class="mo" id="mi"><div class="mx">
+  <button class="mcl" onclick="cM('mi')">&#10005;</button>
+  <h2>&#128229; Importer CSV</h2>
+  <p class="su">Excel &#8594; Enregistrer sous &#8594; CSV (;) &#8212; dates en JJ/MM/AA</p>
+  <div class="iz" onclick="document.getElementById('cf').click()">
+    <p style="font-size:24px">&#128194;</p><p class="ok">Choisir fichier</p>
+    <p id="fn" style="color:#00e5ff;margin-top:5px;font-weight:700;display:none"></p>
+  </div>
+  <input type="file" id="cf" accept=".csv,.txt" onchange="hf(event)">
+  <div style="margin-top:10px"><div style="font-size:10px;color:#00e5ff;text-transform:uppercase;font-weight:700;margin-bottom:5px">Colonnes attendues</div>
+    <div class="ig"><span><em>1</em>N&#176;OR</span><span><em>2</em>Immatriculation</span><span><em>3</em>Mod&#232;le</span><span><em>4</em>Client</span><span><em>5</em>Intervention</span><span><em>6</em>Entr&#233;e</span><span><em>7</em>Restitution</span><span><em>8</em>Rendu</span><span><em>9</em>Statut</span><span><em>10</em>Retard</span><span><em>11</em>CS</span><span><em>12</em>Remarque</span></div>
+  </div>
+  <div class="fa"><button class="fc" onclick="cM('mi')">Annuler</button><button class="fsg" onclick="impC()">Importer</button></div>
+</div></div>
+<footer class="ftr">
+  <p><span class="br">NCRA Carrosserie</span> &#8212; Maniss Auto</p>
+</footer>
+<script>
+var V=[],CF='tous',PD=null,SID='',RI=null,CON=false,NEWK=null,LT='';
+var LC={ed:{},ad:[],dl:{}};
+var DEFAULT_SID='1vQuc8rLkxteliEoJXIsEQ-8NQVOB6yirxAhVhcQ8UVysY4y1I7IlYs8iNa-7xMdPA0dfUombQHtf41R';
+var SITE_URL='https://issamcharradi87-stack.github.io/ncra/';
+var CAL='<svg class="ci" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width=".8"/><line x1="1" y1="5.5" x2="12" y2="5.5" stroke="currentColor" stroke-width=".6"/><line x1="3.5" y1="1" x2="3.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><line x1="9.5" y1="1" x2="9.5" y2="3.5" stroke="currentColor" stroke-width=".8" stroke-linecap="round"/><circle cx="4.5" cy="8" r=".6" fill="currentColor"/><circle cx="6.5" cy="8" r=".6" fill="currentColor"/><circle cx="8.5" cy="8" r=".6" fill="currentColor"/></svg>';
+var FIELDS=['o','i','m','c','iv','e','r','rd','s','rt','cs','rq'];
+var LB={o:'N\u00b0OR',i:'Immatriculation',m:'Mod\u00e8le',c:'Client',iv:'Intervention',e:'Entr\u00e9e',r:'Restitution',rd:'Rendu',s:'Statut',rt:'Retard',cs:'CS',rq:'Remarque'};
+var DATEF={e:1,r:1,rd:1};
+var MP12=FIELDS.slice(),MP10=['o','i','m','c','iv','e','r','s','rt','rq'];
+var HA={nor:'o',numor:'o',or:'o',immat:'i',immatriculation:'i',modele:'m',client:'c',intervention:'iv',entree:'e',dateentree:'e',restitution:'r',daterestitution:'r',rendu:'rd',daterendu:'rd',statut:'s',retard:'rt',cs:'cs',remarque:'rq',remarques:'rq'};
+function uc(){var n=new Date(),h=('0'+n.getHours()).slice(-2),m=('0'+n.getMinutes()).slice(-2),s=('0'+n.getSeconds()).slice(-2);document.getElementById('ck').textContent=h+':'+m+':'+s;var D=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],M=['Jan','F\u00e9v','Mar','Avr','Mai','Juin','Juil','Ao\u00fbt','Sep','Oct','Nov','D\u00e9c'];document.getElementById('cd').textContent=D[n.getDay()]+' '+n.getDate()+' '+M[n.getMonth()]+' '+n.getFullYear();}
+setInterval(uc,1000);uc();
+function oM(i){document.getElementById(i).classList.add('op');}
+function cM(i){document.getElementById(i).classList.remove('op');}
+window.onclick=function(e){var t=e.target;if(t.classList&&t.classList.contains('mo')&&t.id!=='ma')t.classList.remove('op');};
+function nt(m,c){var n=document.getElementById('nt');n.textContent=m;n.style.background=c||'#00e676';n.classList.add('sh');setTimeout(function(){n.classList.remove('sh');},3000);}
+function es(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):'';}
+function openGS(){var id=SID||DEFAULT_SID;window.open('https://docs.google.com/spreadsheets/d/'+id+'/edit','_blank');}
+document.querySelectorAll('.ft button').forEach(function(b){b.addEventListener('click',function(){CF=this.getAttribute('data-f');document.querySelectorAll('.ft button').forEach(function(x){x.classList.remove('on');});this.classList.add('on');rn();});});
+function toggleConn(){if(CON){doDisc();}else{oM('mc');}}
+function extractID(input){var m=input.match(/spreadsheets\/d\/([^\/]+)/);if(m)return m[1];m=input.match(/^[a-zA-Z0-9_-]{20,}$/);if(m)return input;return null;}
+
+/* ---------- Dates : stockage AAAA-MM-JJ, affichage JJ/MM/AA ---------- */
+function p2(n){return(n<10?'0':'')+n;}
+function tdy(){var n=new Date();return n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate());}
+function mkISO(y,m,d){y=+y;m=+m;d=+d;if(!(y>=1900&&y<=2100&&m>=1&&m<=12&&d>=1&&d<=31))return'';var t=new Date(y,m-1,d);if(t.getFullYear()!==y||t.getMonth()!==m-1||t.getDate()!==d)return'';return y+'-'+p2(m)+'-'+p2(d);}
+function pD(v){
+  if(v==null)return'';
+  var s=String(v).trim(),m;
+  if(!s)return'';
+  if((m=s.match(/^Date\((\d{4}),\s*(\d{1,2}),\s*(\d{1,2})/)))return mkISO(m[1],+m[2]+1,m[3]);
+  if((m=s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})(?:[T\s].*)?$/)))return mkISO(m[1],m[2],m[3]);
+  if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4}|\d{2})(?:[T\s,].*)?$/)))return mkISO(m[3].length===2?2000+(+m[3]):m[3],m[2],m[1]);
+  if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})$/)))return mkISO(new Date().getFullYear(),m[2],m[1]);
+  if((m=s.match(/^(\d{2})(\d{2})(\d{4}|\d{2})$/)))return mkISO(m[3].length===2?2000+(+m[3]):m[3],m[2],m[1]);
+  if(/^\d{5}$/.test(s)){var n=+s;if(n>20000&&n<80000){var dt=new Date(Date.UTC(1899,11,30)+n*864e5);return mkISO(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate());}}
+  return'';
+}
+function fD(v){if(!v)return'';var s=String(v);return/^\d{4}-\d{2}-\d{2}$/.test(s)?s.slice(8,10)+'/'+s.slice(5,7)+'/'+s.slice(2,4):s;}
+function dMask(el,e){
+  if(e&&e.inputType&&e.inputType.indexOf('insert')!==0)return;
+  var s=el.value;
+  if(/^\d{2}$/.test(s)||/^\d{1,2}\/\d{2}$/.test(s))el.value=s+'/';
+}
+function dNorm(el){
+  var t=el.value.trim(),box=el.parentNode;
+  if(!t){box.classList.remove('bad');return;}
+  var iso=pD(t);
+  if(iso){el.value=fD(iso);box.classList.remove('bad');var pk=box.querySelector('.dpk');if(pk)pk.value=iso;}
+  else box.classList.add('bad');
+}
+function dCommit(el){
+  var ix=+el.getAttribute('data-i'),f=el.getAttribute('data-f'),r=V[ix],box=el.parentNode;
+  if(!r)return;
+  var txt=el.value.trim(),cur=r[f]||'',pk=box.querySelector('.dpk');
+  if(txt===fD(cur)){box.classList.remove('bad');return;}
+  if(!txt){setF(ix,f,'');el.value='';if(pk)pk.value='';box.classList.remove('bad');nt('Date effac\u00e9e','#448aff');return;}
+  var iso=pD(txt);
+  if(!iso){nt('Date invalide : utilisez JJ/MM/AA','#ff5252');el.value=fD(cur);box.classList.remove('bad');return;}
+  setF(ix,f,iso);el.value=fD(iso);if(pk)pk.value=iso;box.classList.remove('bad');nt('Date modifi\u00e9e');
+}
+function dPick(pk){
+  var iso=pk.value||'',box=pk.parentNode.parentNode,tx=box.querySelector('.dti');
+  if(tx){tx.value=fD(iso);box.classList.remove('bad');}
+  if(pk.hasAttribute('data-i')){setF(+pk.getAttribute('data-i'),pk.getAttribute('data-f'),iso);nt(iso?'Date modifi\u00e9e':'Date effac\u00e9e');}
+}
+document.addEventListener('click',function(e){var t=e.target;if(t.classList&&t.classList.contains('dpk')&&t.showPicker){try{t.showPicker();}catch(x){}}});
+document.addEventListener('change',function(e){var t=e.target;if(t.classList&&t.classList.contains('dpk'))dPick(t);});
+
+/* ---------- Colonnes : reconnaissance par titre ---------- */
+function blank(){var o={};for(var i=0;i<FIELDS.length;i++)o[FIELDS[i]]='';return o;}
+function nh(x){return String(x==null?'':x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');}
+function mapH(a){var mp=[],n=0;for(var i=0;i<a.length;i++){var k=nh(a[i]),f=Object.prototype.hasOwnProperty.call(HA,k)?HA[k]:null;mp.push(f);if(f)n++;}return n>=3?mp:null;}
+function cv(c,f){if(!c||c.v==null)return'';if(DATEF[f])return pD(c.v)||pD(c.f)||String(c.f!=null?c.f:c.v);return String(c.v);}
+
+/* ---------- Modifications locales (ajouts, changements, suppressions) ---------- */
+function ldLC(){try{var s=localStorage.getItem('nc_local');if(s){var o=JSON.parse(s);if(o&&typeof o==='object'){LC.ed=o.ed||{};LC.ad=o.ad||[];LC.dl=o.dl||{};for(var i=0;i<LC.ad.length;i++){var b=blank();for(var f in b)if(LC.ad[i][f]==null)LC.ad[i][f]='';}}}}catch(x){}}
+function svLC(){try{localStorage.setItem('nc_local',JSON.stringify(LC));}catch(x){}}
+function nLC(){var n=LC.ad.length,k;for(k in LC.dl)n++;for(k in LC.ed)n++;return n;}
+function newK(){return'L:'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function mkKeys(rows){var seen={};for(var i=0;i<rows.length;i++){var b='S:'+rows[i].o;seen[b]=(seen[b]||0)+1;rows[i].k=seen[b]>1?b+'#'+seen[b]:b;}}
+function applyLC(rows){var out=[],i,k,e;for(i=0;i<rows.length;i++){var r=rows[i];if(LC.dl[r.k])continue;e=LC.ed[r.k];if(e)for(k in e)r[k]=e[k];out.push(r);}for(i=0;i<LC.ad.length;i++)out.push(LC.ad[i]);return out;}
+function setF(ix,f,val){var r=V[ix];if(!r)return;r[f]=val;if(r.k.charAt(0)!=='L'){var e=LC.ed[r.k]||(LC.ed[r.k]={});e[f]=val;}svLC();sm();}
+function sm(){if(!CON)return;var n=nLC();document.getElementById('mt').textContent=V.length+' v\u00e9hicule(s)'+(LT?' \u2014 '+LT:'')+(n?' \u2014 '+n+' modification(s) locale(s)':'');}
+function rstLC(){
+  if(!nLC()){nt('Aucune modification locale','#448aff');return;}
+  if(!confirm('Effacer tous les ajouts, modifications et suppressions faits sur cet appareil ?'))return;
+  LC={ed:{},ad:[],dl:{}};svLC();fetchData();cM('mc');nt('Modifications locales effac\u00e9es');
+}
+
+/* ---------- Connexion Google Sheets ---------- */
+function setOn(){CON=true;document.getElementById('tg').className='tgl on';document.getElementById('tgt').textContent='Connect\u00e9';if(RI)clearInterval(RI);RI=setInterval(function(){fetchData(true);},30000);}
+function doConn(){var u=document.getElementById('surl').value.trim();if(!u){nt('Collez le lien ou ID','#ff5252');return;}var id=extractID(u);if(!id){nt('Lien invalide','#ff5252');return;}SID=id;try{localStorage.setItem('nc_sid',SID);}catch(x){}setOn();fetchData();cM('mc');nt('Connect\u00e9');}
+function doDisc(){SID='';CON=false;try{localStorage.removeItem('nc_sid');}catch(x){}if(RI){clearInterval(RI);RI=null;}V=applyLC([]);document.getElementById('tg').className='tgl off';document.getElementById('tgt').textContent='D\u00e9connect\u00e9';document.getElementById('mt').textContent='En attente...';rn();us();nt('D\u00e9connect\u00e9','#ff5252');}
+var gcb=0;
+function isEditing(){var a=document.activeElement;return!!(a&&a.classList&&a.classList.contains('dti'));}
+function fetchData(silent){
+  var id=SID||DEFAULT_SID;
+  if(!silent)document.getElementById('tB').innerHTML='<tr><td colspan="13" class="em"><span class="spin"></span>Chargement...</td></tr>';
+  var cbName='gvizCB'+(gcb++);
+  var url='https://docs.google.com/spreadsheets/d/'+id+'/gviz/tq?tqx=responseHandler:'+cbName+'&tq='+encodeURIComponent('SELECT *');
+  var sc=document.createElement('script');
+  function done(){try{delete window[cbName];}catch(x){window[cbName]=undefined;}try{document.head.removeChild(sc);}catch(x){}}
+  window[cbName]=function(resp){
+    if(silent&&isEditing()){done();return;}
+    try{
+      var rows=[];
+      if(resp&&resp.table){
+        var cols=resp.table.cols||[],rs=resp.table.rows||[],labs=[],j;
+        for(j=0;j<cols.length;j++)labs.push(cols[j].label||'');
+        var mp=mapH(labs),st=0;
+        if(!mp&&rs.length){var r0=rs[0].c||[],a0=[];for(j=0;j<cols.length;j++)a0.push(r0[j]&&r0[j].v!=null?String(r0[j].v):'');mp=mapH(a0);if(mp)st=1;}
+        if(!mp)mp=cols.length<=10?MP10:MP12;
+        for(var i=st;i<rs.length;i++){
+          var r=rs[i].c;if(!r)continue;
+          var o=blank();
+          for(j=0;j<mp.length;j++){var f=mp[j];if(f&&r[j])o[f]=cv(r[j],f);}
+          if(!o.o&&!o.i)continue;
+          o.s=o.s||'En cours';
+          rows.push(o);
+        }
+      }
+      mkKeys(rows);
+      V=applyLC(rows);
+      if(!CON)setOn();
+      LT=new Date().toLocaleString('fr-FR');
+      rn();us();sm();
+      if(!silent)nt(V.length+' v\u00e9hicule(s)');
+    }catch(ex){
+      document.getElementById('tB').innerHTML='<tr><td colspan="13" class="em" style="color:#ff5252">Erreur de lecture</td></tr>';
+      nt('Erreur','#ff5252');
+    }
+    done();
+  };
+  sc.onerror=function(){
+    if(!silent)document.getElementById('tB').innerHTML='<tr><td colspan="13" class="em" style="color:#ff5252">V\u00e9rifiez que le Sheet est publi\u00e9 sur le Web</td></tr>';
+    nt('Erreur connexion','#ff5252');
+    done();
+  };
+  sc.src=url;
+  document.head.appendChild(sc);
+}
+function pL(l,s){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var h=l[i];if(q){if(h==='"'){if(i+1<l.length&&l[i+1]==='"'){c+='"';i++;}else q=false;}else c+=h;}else{if(h==='"')q=true;else if(h===s){r.push(c.trim());c='';}else c+=h;}}r.push(c.trim());return r;}
+
+/* ---------- Tableau ---------- */
+function editCell(ix,f){
+  var r=V[ix];if(!r)return;
+  var nv=prompt('Modifier '+LB[f]+' :',r[f]||'');
+  if(nv===null)return;
+  nv=nv.trim();if(f==='s'&&!nv)nv='En cours';
+  setF(ix,f,nv);rn();us();nt('Modifi\u00e9');
+}
+function delV(ix){
+  var r=V[ix];if(!r)return;
+  if(!confirm('Supprimer '+(r.o?'l\u2019OR '+r.o:'ce v\u00e9hicule')+' ?'))return;
+  if(r.k.charAt(0)==='L'){LC.ad=LC.ad.filter(function(x){return x.k!==r.k;});}else{LC.dl[r.k]=1;}
+  V.splice(ix,1);svLC();rn();us();sm();nt('Supprim\u00e9','#ff5252');
+}
+function tdE(ix,f,html,st,cl,ti){return'<td class="ec'+(cl?' '+cl:'')+'" data-i="'+ix+'" data-f="'+f+'"'+(st?' style="'+st+'"':'')+(ti?' title="'+ti+'"':'')+'>'+html+'</td>';}
+function tdD(ix,f,val,col){
+  var s=String(val||''),iso=/^\d{4}-\d{2}-\d{2}$/.test(s)?s:'';
+  return'<td class="dcell"><div class="dt" style="--dc:'+col+'"><input class="dti" type="text" inputmode="numeric" maxlength="10" placeholder="JJ/MM/AA" autocomplete="off" aria-label="'+LB[f]+' (JJ/MM/AA)" value="'+es(fD(s))+'" data-i="'+ix+'" data-f="'+f+'"><label class="dpb" title="Calendrier">'+CAL+'<input class="dpk" type="date" tabindex="-1" value="'+iso+'" data-i="'+ix+'" data-f="'+f+'"></label></div></td>';
+}
+function rn(){
+  var tb=document.getElementById('tB'),fv=[],k;
+  for(k=0;k<V.length;k++){if(CF==='tous'||(V[k].s||'').toLowerCase().indexOf(CF)>=0)fv.push(k);}
+  if(!fv.length){
+    tb.innerHTML='<tr><td colspan="13" class="em">'+(CON?'Aucun v\u00e9hicule':'Cliquez Config, Importer ou Ajouter')+'</td></tr>';
+  }else{
+    var h='';
+    for(var n=0;n<fv.length;n++){
+      var ix=fv[n],v=V[ix],rc=parseInt(v.rt,10)>0?'#ff5252':'#00e676';
+      h+='<tr'+(v.k===NEWK?' class="nw"':'')+'>';
+      h+=tdE(ix,'o',es(v.o),'font-weight:700;color:#00e5ff;white-space:nowrap');
+      h+=tdE(ix,'i',es(v.i),'font-family:monospace;white-space:nowrap');
+      h+=tdE(ix,'m',es(v.m),'white-space:nowrap');
+      h+=tdE(ix,'c',es(v.c),'white-space:nowrap');
+      h+=tdE(ix,'iv',es(v.iv));
+      h+=tdD(ix,'e',v.e,'#00e5ff');
+      h+=tdD(ix,'r',v.r,'#ffd740');
+      h+=tdD(ix,'rd',v.rd,'#00e676');
+      h+='<td class="ec" data-i="'+ix+'" data-f="s"><span class="bdg '+gB(v.s||'')+'">'+es(v.s)+'</span></td>';
+      h+=tdE(ix,'rt',es(v.rt||'\u2014'),'font-family:monospace;color:'+rc);
+      h+=tdE(ix,'cs',es(v.cs||'\u2014'),'','cc');
+      h+=tdE(ix,'rq',es(v.rq||'\u2014'),'max-width:170px;overflow:hidden;text-overflow:ellipsis','',es(v.rq));
+      h+='<td style="text-align:center"><button class="del" data-i="'+ix+'" title="Supprimer">&#10005;</button></td></tr>';
+    }
+    tb.innerHTML=h;
+  }
+  document.getElementById('tC').textContent=fv.length+' v\u00e9hicule(s)'+(CF!=='tous'?' (filtr\u00e9s)':'');
+  if(NEWK){var nr=tb.querySelector('tr.nw');if(nr&&nr.scrollIntoView)nr.scrollIntoView({block:'nearest',behavior:'smooth'});NEWK=null;}
+}
+(function(){
+  var tb=document.getElementById('tB');
+  tb.addEventListener('click',function(e){
+    var t=e.target,d=t.closest('.del');
+    if(d){delV(+d.getAttribute('data-i'));return;}
+    if(t.closest('.dt'))return;
+    var c=t.closest('td.ec');
+    if(c)editCell(+c.getAttribute('data-i'),c.getAttribute('data-f'));
+  });
+  tb.addEventListener('input',function(e){var t=e.target;if(t.classList.contains('dti'))dMask(t,e);});
+  tb.addEventListener('focusout',function(e){var t=e.target;if(t.classList.contains('dti'))dCommit(t);});
+  tb.addEventListener('keydown',function(e){
+    var t=e.target;if(!t.classList.contains('dti'))return;
+    if(e.key==='Enter'){e.preventDefault();t.blur();}
+    else if(e.key==='Escape'){var r=V[+t.getAttribute('data-i')];t.value=r?fD(r[t.getAttribute('data-f')]):'';t.blur();}
+  });
+})();
+function gB(s){var l=s.toLowerCase();if(l.indexOf('cours')>=0)return'b1';if(l.indexOf('surveill')>=0)return'b2';if(l.indexOf('retard')>=0)return'b3';if(l.indexOf('temps')>=0)return'b4';return'b5';}
+function us(){var a=0,b=0,c=0,d=0;for(var i=0;i<V.length;i++){var l=V[i].s.toLowerCase();if(l.indexOf('cours')>=0)a++;else if(l.indexOf('surveill')>=0)b++;else if(l.indexOf('retard')>=0)c++;else if(l.indexOf('temps')>=0)d++;}document.getElementById('s1').textContent=a;document.getElementById('s2').textContent=b;document.getElementById('s3').textContent=c;document.getElementById('s4').textContent=d;document.getElementById('s5').textContent=V.length;var ot=d;for(var i=0;i<V.length;i++){var l2=V[i].s.toLowerCase();if(l2.indexOf('termin')>=0||l2.indexOf('livr')>=0)ot++;}var p=V.length?Math.round(ot/V.length*100):0;document.getElementById('ppv').textContent=p+'%';document.getElementById('pc').setAttribute('stroke-dashoffset',144.5-144.5*p/100);}
+
+/* ---------- Ajouter ---------- */
+function syncFilterBtns(){var b=document.querySelectorAll('.ft button');for(var i=0;i<b.length;i++)b[i].classList.toggle('on',b[i].getAttribute('data-f')===CF);}
+function oAdd(){
+  var ids=['a_o','a_i','a_m','a_c','a_iv','a_e','a_r','a_rd','a_rt','a_cs','a_rq'];
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);el.value='';
+    if(el.parentNode.classList.contains('dt')){el.parentNode.classList.remove('bad');var pk=el.parentNode.querySelector('.dpk');if(pk)pk.value='';}
+  }
+  var ea=document.getElementById('a_e');
+  ea.value=fD(tdy());ea.parentNode.querySelector('.dpk').value=tdy();
+  document.getElementById('a_s').value='En cours';
+  oM('ma');
+  setTimeout(function(){document.getElementById('a_o').focus();},60);
+}
+function doAdd(){
+  var g=function(id){return(document.getElementById(id).value||'').trim();};
+  var r=blank();
+  r.o=g('a_o');
+  if(!r.o){nt('Le N\u00b0OR est obligatoire','#ff5252');document.getElementById('a_o').focus();return;}
+  r.i=g('a_i');r.m=g('a_m');r.c=g('a_c');r.iv=g('a_iv');
+  var df=[['e','a_e'],['r','a_r'],['rd','a_rd']];
+  for(var i=0;i<df.length;i++){
+    var el=document.getElementById(df[i][1]),t=el.value.trim();
+    if(t){var iso=pD(t);if(!iso){el.parentNode.classList.add('bad');el.focus();nt('Date invalide : utilisez JJ/MM/AA','#ff5252');return;}r[df[i][0]]=iso;}
+  }
+  r.s=g('a_s')||'En cours';r.rt=g('a_rt');r.cs=g('a_cs');r.rq=g('a_rq');
+  for(var k=0;k<V.length;k++){if(V[k].o===r.o){if(!confirm('L\u2019OR '+r.o+' existe d\u00e9j\u00e0. Ajouter quand m\u00eame ?'))return;break;}}
+  r.k=newK();
+  LC.ad.push(r);V.push(r);svLC();
+  CF='tous';syncFilterBtns();NEWK=r.k;
+  rn();us();sm();cM('ma');nt('V\u00e9hicule ajout\u00e9');
+}
+document.getElementById('ma').addEventListener('keydown',function(e){
+  var t=e.target;
+  if(e.key==='Enter'&&t.tagName==='INPUT'&&t.type==='text'){e.preventDefault();doAdd();}
+});
+
+/* ---------- Partager : QR, WhatsApp, SMS, Lien ---------- */
+function curLink(){var u=(document.getElementById('slnk').value||'').trim();return u||SITE_URL;}
+function waMsg(u){return'NCRA Carrosserie \u2014 Maniss Auto\nSuivi en temps r\u00e9el :\n'+u;}
+function smMsg(u){return'NCRA Suivi : '+u;}
+function updQR(){
+  var u=curLink(),im=document.getElementById('qi2'),src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(u);
+  if(im.getAttribute('src')!==src)im.setAttribute('src',src);
+  document.getElementById('qrd').textContent=u;
+}
+function selSh(n){
+  var t=document.querySelectorAll('.stb button'),p=document.querySelectorAll('.sp'),i,u=curLink();
+  for(i=0;i<t.length;i++)t[i].classList.toggle('on',t[i].getAttribute('data-t')===n);
+  for(i=0;i<p.length;i++)p[i].classList.toggle('on',p[i].id==='sp-'+n);
+  if(n==='qr')updQR();
+  if(n==='wa')document.getElementById('wam').textContent=waMsg(u);
+  if(n==='sm')document.getElementById('smm').textContent=smMsg(u);
+}
+function oShare(){oM('ms');selSh('qr');}
+function fbCopy(u){var t=document.createElement('textarea');t.value=u;document.body.appendChild(t);t.select();try{document.execCommand('copy');nt('Lien copi\u00e9');}catch(x){nt('Copie impossible','#ff5252');}document.body.removeChild(t);}
+function cpl(){var u=curLink();try{navigator.clipboard.writeText(u).then(function(){nt('Lien copi\u00e9');},function(){fbCopy(u);});}catch(x){fbCopy(u);}}
+function swa(){window.open('https://wa.me/?text='+encodeURIComponent(waMsg(curLink())),'_blank');}
+function ssm(){window.open('sms:?body='+encodeURIComponent(smMsg(curLink())));}
+
+/* ---------- Import / Export CSV ---------- */
+function rdF(f){
+  document.getElementById('fn').style.display='block';document.getElementById('fn').textContent=f.name;
+  var r=new FileReader();
+  r.onload=function(ev){
+    var t=ev.target.result;
+    if(t.indexOf('\ufffd')>=0){var r2=new FileReader();r2.onload=function(e2){PD=e2.target.result;};r2.readAsText(f,'windows-1252');}
+    else PD=t;
+  };
+  r.readAsText(f,'UTF-8');
+}
+function hf(e){var f=e.target.files[0];if(f)rdF(f);}
+function impC(){
+  if(!PD){nt('Choisissez un fichier','#ff5252');return;}
+  var lines=PD.replace(/^\ufeff/,'').split(/\r?\n/).filter(function(l){return l.trim();});
+  if(!lines.length){nt('Fichier vide','#ff5252');return;}
+  var sep=lines[0].indexOf(';')>=0?';':',',h0=pL(lines[0],sep),mp=mapH(h0),st=0;
+  if(mp)st=1;
+  else{mp=h0.length<=10?MP10:MP12;var fl=lines[0].toLowerCase();if(fl.indexOf('immat')>=0||fl.indexOf('client')>=0)st=1;}
+  var nb=0;
+  for(var i=st;i<lines.length;i++){
+    var c=pL(lines[i],sep),o=blank();
+    for(var j=0;j<mp.length&&j<c.length;j++){var f=mp[j];if(!f)continue;o[f]=DATEF[f]?(pD(c[j])||c[j]):c[j];}
+    if(!o.o)continue;
+    o.s=o.s||'En cours';o.k=newK();
+    LC.ad.push(o);V.push(o);nb++;
+  }
+  svLC();rn();us();sm();cM('mi');PD=null;
+  document.getElementById('cf').value='';document.getElementById('fn').style.display='none';
+  nt(nb+' import\u00e9(s)');
+}
+function xC(){
+  if(!V.length){nt('Aucune donn\u00e9e','#ff5252');return;}
+  var head=[];for(var h=0;h<FIELDS.length;h++)head.push(LB[FIELDS[h]]);
+  var csv=head.join(';')+'\n';
+  for(var i=0;i<V.length;i++){
+    var p=[];
+    for(var j=0;j<FIELDS.length;j++){var f=FIELDS[j],x=V[i][f]||'';if(DATEF[f])x=fD(x);p.push('"'+String(x).replace(/"/g,'""')+'"');}
+    csv+=p.join(';')+'\n';
+  }
+  var a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent('\ufeff'+csv);
+  a.download='NCRA_'+tdy()+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  nt('Export\u00e9');
+}
+var dz=document.querySelector('.iz');
+if(dz){
+  dz.ondragover=function(e){e.preventDefault();dz.style.borderColor='#00e676';};
+  dz.ondragleave=function(){dz.style.borderColor='';};
+  dz.ondrop=function(e){e.preventDefault();dz.style.borderColor='';var f=e.dataTransfer.files[0];if(f)rdF(f);};
+}
+try{var ss=localStorage.getItem('nc_sid');if(ss)SID=ss;}catch(x){}
+ldLC();
+document.getElementById('slnk').value=SITE_URL;
+fetchData();
+</script>
+</body>
+</html>
